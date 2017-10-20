@@ -67,7 +67,10 @@ def group_reply(msg):
     defaultReply = ' “' + text + '”,朕已阅! '  # 容错，服务器无响应
     reply = get_response(text)  # @我的时候消息要特殊处理
     if msg['isAt']:
-        return reply or defaultReply
+        if '斗图' == text:
+            doutu(msg)
+        else:
+            return reply or defaultReply
 
 
 def maxCount():
