@@ -5,6 +5,7 @@ import os
 
 global count
 
+
 def maxCount():
     global path
     path = os.path.abspath('.') + '\\pictures'

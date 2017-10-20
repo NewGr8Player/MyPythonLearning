@@ -1,4 +1,4 @@
 config:
-  limit:
-  api_key:
-  api_secret:
+  limit: '8'
+  api_key: c7600a3f9294d1e01e28dd168b270b78
+  api_secret: mk9m4xi6qegc

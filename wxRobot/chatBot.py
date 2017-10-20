@@ -6,13 +6,12 @@ import random
 import itchat
 import requests
 import yaml
-from itchat.content import *
 
 from wxRobot import globalVars
 
 
 def get_config():  # 获取配置
-    file = open("./config.yml")
+    file = open(os.path.abspath('.') + "\\wxRobot\\config.yml")
     config = yaml.load(file)
     #
     baseUrl = 'http://i.itpk.cn/api.php'
@@ -42,7 +41,6 @@ def get_response(msg):
 
 @itchat.msg_register(['Text', 'Map', 'Card', 'Note', 'Sharing'])
 def bot_reply(msg):
-    print(msg)
     text = msg['Text'].strip()
     print(msg['User'].NickName + ' 说:' + text)
     defaultReply = ' “' + text + '”,朕已阅! '  # 容错，服务器无响应
@@ -59,7 +57,7 @@ def bot_reply(msg):
 def bot_media_replay(msg):
     # 小胖子
     if msg['User'].NickName == '付晓蕾' or msg['User'].NickName == '冯泽明':
-        return doutu(msg)
+        doutu(msg)
 
 
 @itchat.msg_register('Text', isGroupChat=True)
@@ -85,20 +83,18 @@ def maxCount():
 
 
 def doutu(msg):
-    fileNumber = int(random.uniform(0, globalVars.get_count()))
-    fileName = globalVars.get_path() + '//' + str(fileNumber)
+    fileNumber = random.randint(0, globalVars.get_count())
+    fileName = globalVars.get_path() + '\\' + str(fileNumber)
     if os.path.exists(fileName + '.jpg'):
         fileName += '.jpg'
     else:
         fileName += '.gif'
-    typeSymbol = {
-        PICTURE: 'img',
-        VIDEO: 'vid', }.get(msg.type, 'fil')
-    return '@%s@%s' % (typeSymbol, fileName)
+    itchat.send_image(fileName, msg['User'].UserName)
 
 
 if __name__ == '__main__':
-    globalVars.set_path(os.path.abspath('..') + '\\doutu\\pictures')
+    globalVars.set_path(os.path.abspath('.') + '\\doutu\\pictures')
+    globalVars.set_count(maxCount())
     # 获取配置
     get_config()
     # 我们使用热启动,不用每次的都扫码登陆
