@@ -27,7 +27,7 @@ def get_response(msg):
     try:
         # 返回需要解码 [讲笑话的返回值特殊]
         r = requests.post(globalVars.get_apiUrl() + msg).content
-        if '讲笑话' == msg:
+        if '笑话' in msg:  # 注意 因为匹配关键词是 '笑话' 所以要用 in 判断是否存在于字符串中
             jsonStr = r.decode('utf-8-sig')
             jsonObj = json.loads(jsonStr)
             text = '《' + jsonObj['title'] + '》\n' + jsonObj['content']
@@ -57,6 +57,7 @@ def bot_reply(msg):
 def bot_media_replay(msg):
     # 小胖子
     if msg['User'].NickName == '付晓蕾' or msg['User'].NickName == '冯泽明':
+        print(msg['User'].NickName + '想要斗图!')  # 加一条输出，后台确认发图片消息的人
         doutu(msg)
 
 
@@ -67,7 +68,7 @@ def group_reply(msg):
     defaultReply = ' “' + text + '”,朕已阅! '  # 容错，服务器无响应
     reply = get_response(text)  # @我的时候消息要特殊处理
     if msg['isAt']:
-        if '斗图' == text:
+        if '斗图' in text:
             doutu(msg)
         else:
             return reply or defaultReply
@@ -86,8 +87,8 @@ def maxCount():
 
 
 def doutu(msg):
-    fileNumber = random.randint(0, globalVars.get_count())
-    fileName = globalVars.get_path() + '\\' + str(fileNumber)
+    fileNumber = str(random.randint(0, globalVars.get_count())).zfill(2)  # zfill是python自带的补前置零函数
+    fileName = globalVars.get_path() + '\\' + fileNumber
     if os.path.exists(fileName + '.jpg'):
         fileName += '.jpg'
     else:
