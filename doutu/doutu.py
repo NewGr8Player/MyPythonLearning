@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import os
 
+# 爬取斗图吧图片爬虫
 global count
 
 

@@ -5,22 +5,8 @@ import random
 
 import itchat
 import requests
-import yaml
 
 from wxRobot import globalVars
-
-
-def get_config():  # 获取配置
-    file = open(os.path.abspath('.') + "\\wxRobot\\config.yml")
-    config = yaml.load(file)
-    #
-    baseUrl = 'http://i.itpk.cn/api.php'
-    # API最大分析次数，取值范围为2-8，值越大精确率越高，但是会影响API响应时间
-    limit = 'limit=' + config['config']['limit']
-    api_key = 'api_key=' + config['config']['api_key']
-    api_secret = 'api_secret=' + config['config']['api_secret']
-    question = 'question='
-    globalVars.set_apiUrl(baseUrl + '?' + limit + '&' + api_key + '&' + api_secret + '&' + question)
 
 
 def get_response(msg):
@@ -99,8 +85,6 @@ def doutu(msg):
 if __name__ == '__main__':
     globalVars.set_path(os.path.abspath('.') + '\\doutu\\pictures')
     globalVars.set_count(maxCount())
-    # 获取配置
-    get_config()
     # 我们使用热启动,不用每次的都扫码登陆
     itchat.auto_login(hotReload=True)
     itchat.run()

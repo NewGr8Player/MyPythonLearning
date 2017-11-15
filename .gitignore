@@ -103,3 +103,4 @@ ENV/
 *.pkl
 /wxRobot/config.yml
 doutu/pictures/
+*.jpg
