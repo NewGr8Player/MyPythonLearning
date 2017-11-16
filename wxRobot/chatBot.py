@@ -10,6 +10,10 @@ from wxRobot import globalVars
 from pic_extract import picExtract
 
 
+REPLY_USER_NICKNAME = '冯泽明 付晓蕾 x X 安源'
+REPLY_GROUPNAME = '叫啥叫啥！ 聊天机器人测试'
+
+
 def get_response(msg):
     try:
         # 返回需要解码 [讲笑话的返回值特殊]
@@ -33,17 +37,18 @@ def bot_reply(msg):
     defaultReply = ' “' + text + '”,朕已阅! '  # 容错，服务器无响应
     reply = get_response(text)
     # 小胖子
-    if msg['User'].NickName == '付晓蕾' or msg['User'].NickName == '冯泽明':
+    if msg['User'].NickName in REPLY_USER_NICKNAME:
         if '斗图' in msg['Text'].strip():
             doutu(msg)
         else:
+            print('----给[' + msg['User'].NickName + ']的回复:' + (reply or defaultReply))
             return reply or defaultReply
 
 
 @itchat.msg_register(['Picture', 'Recording', 'Attachment', 'Video'])
 def bot_media_replay(msg):
     # 小胖子
-    if msg['User'].NickName == '付晓蕾' or msg['User'].NickName == '冯泽明':
+    if msg['User'].NickName in REPLY_USER_NICKNAME:
         try:
             # 这里需要进行一场处理，否则可能因发送的图片为动态图造成程序异常中断
             pic_text = picExtract.get_file_text(msg['Text']())
@@ -51,7 +56,7 @@ def bot_media_replay(msg):
             itchat.send_msg('你发的图片上写着：“' + pic_text + '”', msg['User'].UserName)
             # 识别图片上的文字，暂未指定处理方案
         except:
-            print('[!@系统异常：#发送的图片未能处理]')
+            print('{!@系统异常：#发送的图片未能处理,图片来自[' + msg['User'].NickName + ']}')
         doutu(msg)
 
 
@@ -60,11 +65,12 @@ def group_reply(msg):
     text = msg['Text'].replace('@晓晓', '').strip()
     print(msg['ActualNickName'] + ' 说:' + text)
     defaultReply = ' “' + text + '”,朕已阅! '  # 容错，服务器无响应
-    reply = get_response(text)  # @我的时候消息要特殊处理
-    if msg['isAt']:
+    reply = get_response(text)  # @我的时候消息要特殊处理 && 指定的群进行特殊处理
+    if msg['isAt'] or msg['User']['NickName'] in REPLY_GROUPNAME:
         if '斗图' in text:
             doutu(msg)
         else:
+            print('----群[' + msg['User']['NickName'] + ']的回复:' + (reply or defaultReply))
             return reply or defaultReply
 
 
