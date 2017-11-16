@@ -7,6 +7,7 @@ import itchat
 import requests
 
 from wxRobot import globalVars
+from pic_extract import picExtract
 
 
 def get_response(msg):
@@ -33,7 +34,7 @@ def bot_reply(msg):
     reply = get_response(text)
     # 小胖子
     if msg['User'].NickName == '付晓蕾' or msg['User'].NickName == '冯泽明':
-        if '斗图' == msg['Text'].strip():
+        if '斗图' in msg['Text'].strip():
             doutu(msg)
         else:
             return reply or defaultReply
@@ -43,7 +44,14 @@ def bot_reply(msg):
 def bot_media_replay(msg):
     # 小胖子
     if msg['User'].NickName == '付晓蕾' or msg['User'].NickName == '冯泽明':
-        print(msg['User'].NickName + '想要斗图!')  # 加一条输出，后台确认发图片消息的人
+        try:
+            # 这里需要进行一场处理，否则可能因发送的图片为动态图造成程序异常中断
+            pic_text = picExtract.get_file_text(msg['Text']())
+            print(msg['User'].NickName + '想要斗图!' + pic_text)  # 加一条输出，后台确认发图片消息的人
+            itchat.send_msg('你发的图片上写着：“' + pic_text, msg['User'].UserName + '”')
+            # 识别图片上的文字，暂未指定处理方案
+        except:
+            print('[!@系统异常：#发送的图片未能处理]')
         doutu(msg)
 
 
@@ -79,6 +87,7 @@ def doutu(msg):
         fileName += '.jpg'
     else:
         fileName += '.gif'
+    print('\t[使用图片路径：' + fileName + ']\n')
     itchat.send_image(fileName, msg['User'].UserName)
 
 

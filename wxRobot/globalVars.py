@@ -70,7 +70,9 @@ def get_SECRET_KEY():
 
 
 def init():
-    file = open(os.path.abspath('.') + "\\wxRobot\\config.yml")
+    config_path = 'D:\\Workspace\\MyPythonLearning\\wxRobot\\config.yml'
+    # config_path = os.path.abspath('.') + "\\wxRobot\\config.yml"
+    file = open(config_path)
     config = yaml.load(file)
     config_root = config['config']
     robot_api = config_root['robot_api']
