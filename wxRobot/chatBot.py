@@ -48,7 +48,7 @@ def bot_media_replay(msg):
             # 这里需要进行一场处理，否则可能因发送的图片为动态图造成程序异常中断
             pic_text = picExtract.get_file_text(msg['Text']())
             print(msg['User'].NickName + '想要斗图!' + pic_text)  # 加一条输出，后台确认发图片消息的人
-            itchat.send_msg('你发的图片上写着：“' + pic_text, msg['User'].UserName + '”')
+            itchat.send_msg('你发的图片上写着：“' + pic_text + '”', msg['User'].UserName)
             # 识别图片上的文字，暂未指定处理方案
         except:
             print('[!@系统异常：#发送的图片未能处理]')
