@@ -10,7 +10,7 @@ from wxRobot import globalVars
 from pic_extract import picExtract
 
 
-REPLY_USER_NICKNAME = '冯泽明 付晓蕾 x X 安源'
+REPLY_USER_NICKNAME = '冯泽明 付晓蕾 x X 安源 赵航'
 REPLY_GROUPNAME = '叫啥叫啥！ 聊天机器人测试'
 
 
