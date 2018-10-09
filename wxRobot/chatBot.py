@@ -9,8 +9,7 @@ import requests
 from wxRobot import globalVars
 from pic_extract import picExtract
 
-
-REPLY_USER_NICKNAME = '冯泽明 付晓蕾 x X 安源 赵航'
+REPLY_USER_NICKNAME = '冯泽明 付晓蕾 x X 安源 赵航 就是随便改个名'
 REPLY_GROUPNAME = '叫啥叫啥！ 聊天机器人测试'
 
 
@@ -26,7 +25,7 @@ def get_response(msg):
             return text
         else:
             return r.decode('utf-8')
-    except:
+    except (RuntimeError, TypeError, NameError, IOError):
         return  # 将会返回一个None
 
 
@@ -55,7 +54,7 @@ def bot_media_replay(msg):
             print(msg['User'].NickName + '想要斗图!' + pic_text)  # 加一条输出，后台确认发图片消息的人
             itchat.send_msg('你发的图片上写着：“' + pic_text + '”', msg['User'].UserName)
             # 识别图片上的文字，暂未指定处理方案
-        except:
+        except (RuntimeError, TypeError, NameError, IOError):
             print('{!@系统异常：#发送的图片未能处理,图片来自[' + msg['User'].NickName + ']}')
         doutu(msg)
 

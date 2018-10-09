@@ -39,7 +39,7 @@ class doutuSpider(object):
             try:
                 self.get_img_url(sub_url)
             except:
-                pass
+                print("Error! Fail to download pictures.")
 
     def get_img_url(self, url):
         data = requests.get(url, headers=self.headers)
@@ -50,13 +50,13 @@ class doutuSpider(object):
             try:
                 sub_url = img.get('src')
             except:
-                pass
+                print("Error:" + sub_url)
             finally:
                 urls = 'http:' + sub_url
             try:
                 self.get_img(urls)
             except:
-                pass
+                print("Error:Get IMGs,url:" + urls)
 
     def get_img(self, url):
         filetype = url.split('/')[-1].split('.')[-1]

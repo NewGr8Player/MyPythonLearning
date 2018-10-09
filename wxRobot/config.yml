@@ -1,4 +1,9 @@
 config:
-  limit: '8'
-  api_key: c7600a3f9294d1e01e28dd168b270b78
-  api_secret: mk9m4xi6qegc
+  robot_api:
+    limit: '8'
+    api_key: c7600a3f9294d1e01e28dd168b270b78
+    api_secret: mk9m4xi6qegc
+  baidu_api:
+    api_id: '9851066'
+    api_key: 'LUGBatgyRGoerR9FZbV4SQYk'
+    secret_key: 'fB2MNz1c2UHLTximFlC4laXPg7CVfyjV'
